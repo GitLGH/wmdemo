@@ -23,6 +23,7 @@ public class UserController {
     @ResponseBody
     public Result getUserById(@RequestParam("id") String  id){
         Result result=new Result();
+        System.out.println("连接数据库");
         User user=userMapper.findUserById(Integer.parseInt(id));
         user.setPassWord(MD5Utils.getMD5Token32(user.getPassWord()));
         result.setData(user);
