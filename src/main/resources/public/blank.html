@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript" src="js/lib.js"></script>
+<script>
+    //微信授权
+    function wechat() {
+        $.ajax({
+            type: "get",
+            url: "getAccessToken",
+            dataType: "json",
+            cache: false, //缓存
+            async: true, //异步
+            loadingContainer: $("body"),
+            data: {
+                'code': $.getPara("code"),
+                'state': $.getPara("state"),
+            },
+            success: function(result) {
+                if(result.data==null||result.data==''){
+                    alert("取消了登录授权");
+                }else {
+                    alert(result.data.openid);
+                    alert(result.data.nickname);
+                    alert(result.data.sex);
+                    alert(result.data.language);
+                    alert(result.data.city);
+                    alert(result.data.province);
+                    alert(result.data.country);
+                    alert(result.data.headimgurl);
+                    alert(result.data.unionid);
+                }
+
+            }
+        });
+    }
+
+    $(function() {
+        //微信平台会将code拼接到回调页面返回回来
+        wechat();//回调页面一上来就去请求后台接口，将授权成功返回的code和state取下来，传入后台换取access——token，然后token在换取微信登录的账户的基本信息
+    });
+
+
+
+</script>
+
+</body>
+</html>
